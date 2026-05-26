@@ -10,9 +10,9 @@ print("DATA LOADED SUCCESSFULLY")
 print("\nCOLUMNS:")
 print(df.columns)
 
-# -----------------------------
+
 # DATA CLEANING
-# -----------------------------
+
 
 # Remove duplicates
 df = df.drop_duplicates()
@@ -22,9 +22,9 @@ df = df.dropna()
 
 print("\nDATA CLEANING COMPLETED")
 
-# -----------------------------
+
 # COLUMN NAMES
-# -----------------------------
+
 
 amount_column = "amount"
 customer_column = "client_id"
@@ -35,24 +35,22 @@ df[amount_column] = pd.to_numeric(df[amount_column], errors="coerce")
 # Remove rows with invalid amount
 df = df.dropna(subset=[amount_column])
 
-# -----------------------------
+
 # HIGH VALUE TRANSACTIONS
-# -----------------------------
+
 
 high_value = df[df[amount_column] > 50000]
 
 print("\nHIGH VALUE TRANSACTIONS FOUND:")
 print(len(high_value))
 
-# -----------------------------
 # SAMPLE DATA FOR EXCEL
-# -----------------------------
+
 
 sample_data = df.head(10000)
 
-# -----------------------------
 # SQL DATABASE
-# -----------------------------
+
 
 conn = sqlite3.connect("../data/transactions.db")
 
@@ -61,9 +59,8 @@ df.to_sql("transactions", conn, if_exists="replace", index=False)
 
 print("\nSQL DATABASE CREATED")
 
-# -----------------------------
 # SQL QUERY
-# -----------------------------
+
 
 query = f"""
 SELECT {customer_column},
@@ -79,9 +76,9 @@ top_customers = pd.read_sql(query, conn)
 print("\nTOP CUSTOMERS")
 print(top_customers)
 
-# -----------------------------
+
 # EXCEL REPORT GENERATION
-# -----------------------------
+# 
 
 with pd.ExcelWriter("../reports/Audit_Report.xlsx") as writer:
 
